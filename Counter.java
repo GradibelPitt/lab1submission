@@ -1,4 +1,3 @@
-
 /**
  * A counter that will roll over to the min
  * value when attempting to increase it beyond the maximum value and to the max 
