@@ -6,6 +6,7 @@
  * @author Charles Hoot 
  * @version 4.0
  */
+
 public class Rational
 {
     // Step 2: Create the private data fields that will hold the state of a Rational object
@@ -17,6 +18,7 @@ public class Rational
      */
     public Rational()
     {       
+	// ADD CODE TO THE CONSTRUCTOR
         this.numerator = 1;
         this.denominator = 1;
     }
@@ -31,6 +33,10 @@ public class Rational
         if (d == 0) {
             throw new ZeroDenominatorException("Denominator cannot be zero.");
         }
+	if (d < 0) {
+            n = -n;
+            d = -d;
+	}
         this.numerator = n;
         this.denominator = d;
         normalize();
@@ -43,7 +49,8 @@ public class Rational
      */
     public int getNumerator()
     {
-        return numerator;
+        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
+	return numerator;
     }
     
     /**
@@ -62,7 +69,8 @@ public class Rational
      * @return a new rational number that is negation of this number -r
      */    
     public Rational negate()
-    {               
+    {   
+	// CHANGE THE RETURN TO SOMETHING APPROPRIATE            
         return new Rational(-this.numerator, this.denominator);
     }
 
@@ -79,6 +87,9 @@ public class Rational
         return new Rational(this.denominator, this.numerator);
     }
 
+
+
+
     /**
      * Add two rational numbers
      *
@@ -87,8 +98,12 @@ public class Rational
      */    
     public Rational add(Rational other)
     {       
+	int lcd = this.denominator * other.denominator / gcd(this.denominator, other.denominator);
+
+	// Adjust the numerators to the new denominator
         int newNumerator = this.numerator * other.getDenominator() + other.getNumerator() * this.denominator;
         int newDenominator = this.denominator * other.getDenominator();
+
         return new Rational(newNumerator, newDenominator);
     }
     
@@ -100,8 +115,10 @@ public class Rational
      */    
     public Rational subtract(Rational other)
     {               
-        int newNumerator = this.numerator * other.getDenominator() - other.getNumerator() * this.denominator;
+	
+	int newNumerator = this.numerator * other.getDenominator() - other.getNumerator() * this.denominator;
         int newDenominator = this.denominator * other.getDenominator();
+
         return new Rational(newNumerator, newDenominator);
     }
 
@@ -112,7 +129,8 @@ public class Rational
      * @return a new rational number that is the product of this object and the other rational.
      */    
     public Rational multiply(Rational other)
-    {       
+    {  
+	 // ADD NEW CODE AND CHANGE THE RETURN TO SOMETHING APPROPRIATE     
         int newNumerator = this.numerator * other.getNumerator();
         int newDenominator = this.denominator * other.getDenominator();
         return new Rational(newNumerator, newDenominator);
@@ -130,8 +148,15 @@ public class Rational
         if (other.getNumerator() == 0) {
             throw new ZeroDenominatorException("Cannot divide by a rational number with numerator 0.");
         }
+
+	// Create the reciprocal of the other Rational
+	Rational reciprocal = other.invert();
+
+	// Multiply the current Rational by the reciprocal of the other
         int newNumerator = this.numerator * other.getDenominator();
         int newDenominator = this.denominator * other.getNumerator();
+
+	 // Return the result in normalized form
         return new Rational(newNumerator, newDenominator);
     }
      
@@ -142,13 +167,22 @@ public class Rational
      */
     private void normalize()
     {
+	 // ADD CODE TO NORMALIZE THE RATIONAL NUMBER
         if (denominator < 0) { 
             numerator = -numerator;
             denominator = -denominator;
         }
+	
+	// Reduce the fraction to its simplest form
         int gcd = gcd(Math.abs(numerator), Math.abs(denominator)); 
         numerator /= gcd;
         denominator /= gcd;
+
+	// Ensure only the numerator can be negative
+        if (denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
     }
     
     /**
