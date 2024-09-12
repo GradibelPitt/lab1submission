@@ -101,10 +101,12 @@ public class Rational
 	int lcd = this.denominator * other.denominator / gcd(this.denominator, other.denominator);
 
 	// Adjust the numerators to the new denominator
-        int newNumerator = this.numerator * other.getDenominator() + other.getNumerator() * this.denominator;
-        int newDenominator = this.denominator * other.getDenominator();
+        int adjustedNumerator1 = this.numerator * (lcd / this.denominator);
+    	int adjustedNumerator2 = other.getNumerator() * (lcd / other.getDenominator());
 
-        return new Rational(newNumerator, newDenominator);
+    	int newNumerator = adjustedNumerator1 - adjustedNumerator2;
+
+    	return new Rational(newNumerator, lcd);
     }
     
      /**
