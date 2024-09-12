@@ -5,36 +5,35 @@
  * 
  * @author Charles Hoot 
  * @version 4.0
-*/
-
+ */
 public class Rational
 {
-    // PUT PRIVATE DATA FIELDS HERE
-    private int n;
-    private int d;
+    // Step 2: Create the private data fields that will hold the state of a Rational object
+    private int numerator;   // Numerator of the rational number
+    private int denominator; // Denominator of the rational number
+
     /**
      * The default constructor for objects of class Rational.  Creates the rational number 1.
      */
     public Rational()
     {       
         this.numerator = 1;
-	this.denominator = 1;
+        this.denominator = 1;
     }
 
     /**
-     * The alternate constructor for objects of class Rational.  Creates a rational number equivalent to n/d.
+     * The alternate constructor for objects of class Rational. Creates a rational number equivalent to n/d.
      * @param n The numerator of the rational number.
      * @param d The denominator of the rational number.
      */    
     public Rational(int n, int d) throws ZeroDenominatorException
     {
-	if (denominator == 0) {
-		throw new ZeroDenominatorException("Denominator cannot be zero.");
+        if (d == 0) {
+            throw new ZeroDenominatorException("Denominator cannot be zero.");
         }
-	this.numberator = numerator;
-	this.denominator = denominator;
-	normalize();
-     
+        this.numerator = n;
+        this.denominator = d;
+        normalize();
     }
     
     /**
@@ -44,8 +43,7 @@ public class Rational
      */
     public int getNumerator()
     {
-        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return numberator;
+        return numerator;
     }
     
     /**
@@ -58,33 +56,28 @@ public class Rational
         return denominator;
     }
 
-
     /**
-     * Negate a rational number r
+     * Negate a rational number
      * 
      * @return a new rational number that is negation of this number -r
      */    
     public Rational negate()
     {               
-        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        return new Rational(-this.numerator, this.denominator);
     }
 
-
     /**
-     * Invert a rational number r 
+     * Invert a rational number 
      * 
      * @return a new rational number that is 1/r.
      */    
-    public Rational invert()
+    public Rational invert() throws ZeroDenominatorException
     {               
-        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        if (this.numerator == 0) {
+            throw new ZeroDenominatorException("Cannot take reciprocal of a rational number with numerator 0.");
+        }
+        return new Rational(this.denominator, this.numerator);
     }
-
-
-
-
 
     /**
      * Add two rational numbers
@@ -94,67 +87,72 @@ public class Rational
      */    
     public Rational add(Rational other)
     {       
-        // ADD NEW CODE AND CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        int newNumerator = this.numerator * other.getDenominator() + other.getNumerator() * this.denominator;
+        int newDenominator = this.denominator * other.getDenominator();
+        return new Rational(newNumerator, newDenominator);
     }
     
      /**
-     * Subtract a rational number t from this one r
+     * Subtract a rational number from this one
      *
      * @param other the second argument of subtract
      * @return a new rational number that is r-t
      */    
     public Rational subtract(Rational other)
     {               
-        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        int newNumerator = this.numerator * other.getDenominator() - other.getNumerator() * this.denominator;
+        int newDenominator = this.denominator * other.getDenominator();
+        return new Rational(newNumerator, newDenominator);
     }
 
     /**
      * Multiply two rational numbers
      *
      * @param other the second argument of multiply
-     * @return a new rational number that is the sum of this object and the other rational.
+     * @return a new rational number that is the product of this object and the other rational.
      */    
     public Rational multiply(Rational other)
     {       
-        // ADD NEW CODE AND CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        int newNumerator = this.numerator * other.getNumerator();
+        int newDenominator = this.denominator * other.getDenominator();
+        return new Rational(newNumerator, newDenominator);
     }
         
  
      /**
-     * Divide this rational number r by another one t
+     * Divide this rational number by another one
      *
      * @param other the second argument of divide
      * @return a new rational number that is r/t
      */    
-    public Rational divide(Rational other)
+    public Rational divide(Rational other) throws ZeroDenominatorException
     {               
-        // CHANGE THE RETURN TO SOMETHING APPROPRIATE
-        return null;
+        if (other.getNumerator() == 0) {
+            throw new ZeroDenominatorException("Cannot divide by a rational number with numerator 0.");
+        }
+        int newNumerator = this.numerator * other.getDenominator();
+        int newDenominator = this.denominator * other.getNumerator();
+        return new Rational(newNumerator, newDenominator);
     }
      
-      
  /**
      * Put the rational number in normal form where the numerator
-     * and the denominator share no common factors.  Guarantee that only the numerator
+     * and the denominator share no common factors. Guarantee that only the numerator
      * can be negative.
-     *
      */
     private void normalize()
     {
         if (denominator < 0) { 
-            numerator = -n;
-            denominator = -d;
+            numerator = -numerator;
+            denominator = -denominator;
         }
-        int gcd = gcd(Math.abs(n), Math.abs(d)); 
+        int gcd = gcd(Math.abs(numerator), Math.abs(denominator)); 
         numerator /= gcd;
         denominator /= gcd;
     }
     
     /**
-     * Recursively compute the greatest common divisor of two *non-negative* integers
+     * Recursively compute the greatest common divisor of two non-negative integers
      *
      * @param a the first argument of gcd
      * @param b the second argument of gcd
@@ -162,19 +160,10 @@ public class Rational
      */
     private int gcd(int a, int b)
     {
-        int result = 0;
-        if(a<b)
-            result = gcd(b,a);
-        else if(b==0)
-            result = a;
-        else
-        {
-            int remainder = a % b;
-            result = gcd(b, remainder);
+        if (b == 0) {
+            return a;
+        } else {
+            return gcd(b, a % b);
         }
-        return result;
     }
-   
-    
-    
 }
