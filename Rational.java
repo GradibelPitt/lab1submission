@@ -117,10 +117,8 @@ public class Rational
      */    
     public Rational subtract(Rational other)
     {               
-	int lcd = this.denominator * other.getDenominator() / gcd(this.denominator, other.getDenominator());
-	int adjustedNumerator1 = this.numerator * (lcd / this.denominator);
-    	int adjustedNumerator2 = other.getNumerator() * (lcd / other.getDenominator());
-	int newNumerator = adjustedNumerator1 - adjustedNumerator2;
+	int newNumerator = this.numerator * other.getDenominator() - other.getNumerator() * this.denominator;
+    	int newDenominator = this.denominator * other.getDenominator();
 
         return new Rational(newNumerator, newDenominator);
     }
