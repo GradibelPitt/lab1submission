@@ -54,15 +54,17 @@ public class Counter
      */
     @Override
     public boolean equals(Object otherObject){
-        boolean result = false;
-        if (otherObject instanceof Counter)
-        {
             // YOUR CODE GOES HERE
+	    if (this == otherObject) {
+		return true;
+	    }
+   
+    if (otherObject instanceof Counter) {	
 	    Counter otherCounter = (Counter) otherObject;
-	    result =  (this.min == otherCounter.min) &&
-		      (this.max == otherCounter.max) &&
-		      (this.value == otherCounter.value) &&
-		      (this.rolledOver == otherCounter.rolledOver);
+	    return (this.min == otherCounter.min) &&
+		   (this.max == otherCounter.max) &&
+		   (this.value == otherCounter.value) &&
+		   (this.rolledOver == otherCounter.rolledOver);
             
         }
         return false;
@@ -93,12 +95,11 @@ public class Counter
     {
         // ADD CODE TO DECREASE THE VALUE OF THE COUNTER AND HANDLE ROLLOVER
 	if (value > min) {
-        value--; 
-	rolledOver = false;
-    	} 
-        else {
-        value = max;
-	rolledOver = true;  
+        	value--; 
+		rolledOver = false;
+    	} else {
+        	value = max;
+		rolledOver = true;  
         }
     }
     
