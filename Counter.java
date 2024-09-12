@@ -13,6 +13,7 @@ public class Counter
     private int min;
     private int max;
     private int value;
+    private boolean rolledOver;	
 
     /**
      * The default constructor for objects of class Counter.  Minimum is 0 and the maximum
@@ -23,7 +24,8 @@ public class Counter
 	// ADD CODE FOR THE CONSTRUCTOR
       	min = 0;
 	max = Integer.MAX_VALUE;
-	value = 0;	  
+	value = 0;
+	rolledOver = false;	  
     }
     
     
@@ -33,16 +35,15 @@ public class Counter
      * @param min The minimum value that the counter can have
      * @param max The maximum value that the counter can have
      * */
-    public Counter(int min, int max) throws CounterInitializationException
-    {
+    public Counter(int min, int max) throws CounterInitializationException {
         // ADD CODE FOR THE ALTERNATE CONSTRUCTOR
-	if (min >= max){
+	if (min >= max) {
 		throw new CounterInitializationException("Minimum value cannot be greater than or equal to maximum value.");
+	}
 	this.min = min;
         this.max = max;
         this.value = min;
-	rolledOver = false;
-	}
+	this.rolledOver = false;
     }
     
     /**
@@ -64,7 +65,7 @@ public class Counter
 		      (this.value == otherCounter.value);
             
         }
-        return result;
+        return false;
     }
     
     
@@ -77,6 +78,7 @@ public class Counter
 	// ADD CODE TO INCREASE THE VALUE OF THE COUNTER AND HANDLE ROLLOVER
         if (value < max) {
         	value++; 
+		rolledOver = false;
     	} else{
         	value = min; 
 		rolledOver = true;
@@ -92,6 +94,7 @@ public class Counter
         // ADD CODE TO DECREASE THE VALUE OF THE COUNTER AND HANDLE ROLLOVER
 	if (value > min) {
         value--; 
+	rolledOver = false;
     	} 
         else {
         value = max;
@@ -118,8 +121,7 @@ public class Counter
      *
      * @return     true if the counter rolled over
      */
-    public boolean rolledOver()
-    {
+    public boolean rolledOver() {
         // CHANGE THE RETURN TO THE ROLLOVER STATUS OF THE COUNTER
         return rolledOver;
     }
@@ -136,7 +138,7 @@ public class Counter
         // MUST FOLLOW THE FOLLOWING FORMAT:
         //Counter: value=1 min=1 max=9 rolled over=false
 
-        return "Counter: value=" + value + " min=" + min + " max=" + max + " rolled   over=" + rolledOver();		
+        return "Counter: value=" + value + " min=" + min + " max=" + max + " rolled over=" + rolledOver;		
     }
  
 }
