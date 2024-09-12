@@ -53,8 +53,7 @@ public class Counter
      * @return     true if the objects are in the same state
      */
     @Override
-    public boolean equals(Object otherObject)
-    {
+    public boolean equals(Object otherObject){
         boolean result = false;
         if (otherObject instanceof Counter)
         {
@@ -62,7 +61,8 @@ public class Counter
 	    Counter otherCounter = (Counter) otherObject;
 	    result =  (this.min == otherCounter.min) &&
 		      (this.max == otherCounter.max) &&
-		      (this.value == otherCounter.value);
+		      (this.value == otherCounter.value) &&
+		      (this.rolledOver == otherCounter.rolledOver);
             
         }
         return false;
