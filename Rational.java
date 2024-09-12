@@ -96,7 +96,7 @@ public class Rational
      * @param other the second argument of the add
      * @return a new rational number that is the sum of this and the other rational
      */    
-    public Rational subtract(Rational other)
+    public Rational add(Rational other)
     {       
 	int lcd = this.denominator * other.denominator / gcd(this.denominator, other.denominator);
 
@@ -117,9 +117,10 @@ public class Rational
      */    
     public Rational subtract(Rational other)
     {               
-	
-	int newNumerator = this.numerator * other.getDenominator() - other.getNumerator() * this.denominator;
-        int newDenominator = this.denominator * other.getDenominator();
+	int lcd = this.denominator * other.getDenominator() / gcd(this.denominator, other.getDenominator());
+	int adjustedNumerator1 = this.numerator * (lcd / this.denominator);
+    	int adjustedNumerator2 = other.getNumerator() * (lcd / other.getDenominator());
+	int newNumerator = adjustedNumerator1 - adjustedNumerator2;
 
         return new Rational(newNumerator, newDenominator);
     }
