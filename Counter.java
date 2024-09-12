@@ -1,3 +1,4 @@
+
 /**
  * A counter that will roll over to the min
  * value when attempting to increase it beyond the maximum value and to the max 
@@ -8,6 +9,7 @@
  */
 public class Counter
 {
+    // PUT PRIVATE DATA FIELDS HERE
     private int min;
     private int max;
     private int value;
@@ -18,6 +20,7 @@ public class Counter
      */
     public Counter()
     {
+	// ADD CODE FOR THE CONSTRUCTOR
       	min = 0;
 	max = Integer.MAX_VALUE;
 	value = 0;	  
@@ -32,11 +35,14 @@ public class Counter
      * */
     public Counter(int min, int max) throws CounterInitializationException
     {
-        if (min >= max){
+        // ADD CODE FOR THE ALTERNATE CONSTRUCTOR
+	if (min >= max){
 		throw new CounterInitializationException("Minimum value cannot be greater than or equal to maximum value.");
 	this.min = min;
         this.max = max;
         this.value = min;
+	rolledOver = false;
+	}
     }
     
     /**
@@ -68,10 +74,12 @@ public class Counter
      */
     public void increase()
     {
+	// ADD CODE TO INCREASE THE VALUE OF THE COUNTER AND HANDLE ROLLOVER
         if (value < max) {
         	value++; 
-    	} else {
+    	} else{
         	value = min; 
+		rolledOver = true;
        }
     }
  
@@ -86,7 +94,8 @@ public class Counter
         value--; 
     	} 
         else {
-        value = max;  
+        value = max;
+	rolledOver = true;  
         }
     }
     
@@ -112,7 +121,7 @@ public class Counter
     public boolean rolledOver()
     {
         // CHANGE THE RETURN TO THE ROLLOVER STATUS OF THE COUNTER
-        return (value == min || value == max);
+        return rolledOver;
     }
     
     /**
